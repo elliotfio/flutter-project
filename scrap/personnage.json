@@ -1,0 +1,102 @@
+[
+  {
+    "nom": "Homer Simpson",
+    "image": "https://upload.wikimedia.org/wikipedia/en/0/02/Homer_Simpson_2006.png",
+    "description": "Père de famille paresseux, amateur de bière et de donuts, travaillant à la centrale nucléaire de Springfield."
+  },
+  {
+    "nom": "Marge Simpson",
+    "image": "https://upload.wikimedia.org/wikipedia/en/0/0b/Marge_Simpson.png",
+    "description": "Épouse dévouée et mère attentionnée, reconnaissable à sa haute chevelure bleue."
+  },
+  {
+    "nom": "Bart Simpson",
+    "image": "https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png",
+    "description": "Fils aîné espiègle et farceur, célèbre pour ses bêtises et son skateboard."
+  },
+  {
+    "nom": "Lisa Simpson",
+    "image": "https://upload.wikimedia.org/wikipedia/en/e/ec/Lisa_Simpson.png",
+    "description": "Fille cadette surdouée, passionnée de musique et engagée dans diverses causes sociales."
+  },
+  {
+    "nom": "Maggie Simpson",
+    "image": "https://upload.wikimedia.org/wikipedia/en/9/9d/Maggie_Simpson.png",
+    "description": "Bébé de la famille, souvent silencieuse mais étonnamment perspicace."
+  },
+  {
+    "nom": "Abraham Simpson",
+    "image": "https://upload.wikimedia.org/wikipedia/en/8/86/Grampa_Simpson.png",
+    "description": "Père d'Homer, vétéran de guerre sénile vivant à la maison de retraite de Springfield."
+  },
+  {
+    "nom": "Ned Flanders",
+    "image": "https://upload.wikimedia.org/wikipedia/en/8/84/Ned_Flanders.png",
+    "description": "Voisin ultra-religieux et bienveillant, souvent en conflit avec Homer."
+  },
+  {
+    "nom": "Mr. Burns",
+    "image": "https://upload.wikimedia.org/wikipedia/en/5/5a/Mr_Burns.png",
+    "description": "Propriétaire avare et tyrannique de la centrale nucléaire de Springfield."
+  },
+  {
+    "nom": "Waylon Smithers",
+    "image": "https://upload.wikimedia.org/wikipedia/en/8/88/Waylon_Smithers_1.png",
+    "description": "Assistant loyal et dévoué de Mr. Burns, secrètement amoureux de son patron."
+  },
+  {
+    "nom": "Moe Szyslak",
+    "image": "https://upload.wikimedia.org/wikipedia/en/6/65/Moe_Szyslak.png",
+    "description": "Propriétaire grincheux du bar local fréquenté par Homer et ses amis."
+  },
+  {
+    "nom": "Barney Gumble",
+    "image": "https://upload.wikimedia.org/wikipedia/en/7/70/Barney_Gumble.png",
+    "description": "Meilleur ami d'Homer, alcoolique notoire mais parfois surprenant."
+  },
+  {
+    "nom": "Apu Nahasapeemapetilon",
+    "image": "https://upload.wikimedia.org/wikipedia/en/2/23/Apu_Nahasapeemapetilon.png",
+    "description": "Gérant du Kwik-E-Mart, immigrant indien travailleur et respecté."
+  },
+  {
+    "nom": "Clancy Wiggum",
+    "image": "https://upload.wikimedia.org/wikipedia/en/1/1b/Chief_Wiggum.png",
+    "description": "Chef de la police de Springfield, incompétent mais attachant."
+  },
+  {
+    "nom": "Milhouse Van Houten",
+    "image": "https://upload.wikimedia.org/wikipedia/en/1/11/Milhouse_Van_Houten.png",
+    "description": "Meilleur ami de Bart, garçon maladroit et souvent malchanceux."
+  },
+  {
+    "nom": "Nelson Muntz",
+    "image": "https://upload.wikimedia.org/wikipedia/en/1/1b/Nelson_Muntz.png",
+    "description": "Brute de l'école primaire, célèbre pour son rire moqueur 'Ha-ha!'."
+  },
+  {
+    "nom": "Seymour Skinner",
+    "image": "https://upload.wikimedia.org/wikipedia/en/2/28/Principal_Skinner.png",
+    "description": "Directeur de l'école élémentaire de Springfield, souvent en conflit avec Bart."
+  },
+  {
+    "nom": "Edna Krabappel",
+    "image": "https://upload.wikimedia.org/wikipedia/en/5/53/Edna_Krabappel.png",
+    "description": "Professeure de Bart, cynique et désabusée, cherchant l'amour."
+  },
+  {
+    "nom": "Krusty le Clown",
+    "image": "https://upload.wikimedia.org/wikipedia/en/5/5a/Krustytheclown.png",
+    "description": "Clown de télévision célèbre, idole de Bart, mais à la vie personnelle chaotique."
+  },
+  {
+    "nom": "Tahiti Bob (Sideshow Bob)",
+    "image": "https://upload.wikimedia.org/wikipedia/en/6/65/Sideshow_Bob.png",
+    "description": "Ancien acolyte de Krusty, criminel intelligent obsédé par Bart."
+  },
+  {
+    "nom": "Ralph Wiggum",
+    "image": "https://upload.wikimedia.org/wikipedia/en/1/14/Ralph_Wiggum.png",
+    "description": "Fils du chef Wiggum, élève naïf connu pour ses remarques absurdes."
+  }
+]
