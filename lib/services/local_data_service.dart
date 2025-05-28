@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import '../utils/constants.dart';
 
 class News {
   final String title;
@@ -14,15 +13,6 @@ class News {
     required this.content,
     this.imageUrl,
   });
-
-  factory News.fromJson(Map<String, dynamic> json) {
-    return News(
-      title: json['title'] as String,
-      date: json['date'] as String,
-      content: json['content'] as String,
-      imageUrl: json['imageUrl'] as String?,
-    );
-  }
 }
 
 class DailyFact {
@@ -33,13 +23,6 @@ class DailyFact {
     required this.content,
     required this.date,
   });
-
-  factory DailyFact.fromJson(Map<String, dynamic> json) {
-    return DailyFact(
-      content: json['content'] as String,
-      date: json['date'] as String,
-    );
-  }
 }
 
 class Episode {
@@ -50,6 +33,7 @@ class Episode {
   final String description;
   final List<String> characters;
   final String airDate;
+  final String imageUrl;
 
   Episode({
     required this.id,
@@ -59,19 +43,8 @@ class Episode {
     required this.description,
     required this.characters,
     required this.airDate,
+    required this.imageUrl,
   });
-
-  factory Episode.fromJson(Map<String, dynamic> json) {
-    return Episode(
-      id: json['id'] as int,
-      seasonNumber: json['seasonNumber'] as int,
-      episodeNumber: json['episodeNumber'] as int,
-      title: json['title'] as String,
-      description: json['description'] as String,
-      characters: List<String>.from(json['characters'] as List<dynamic>),
-      airDate: json['airDate'] as String,
-    );
-  }
 }
 
 class Character {
@@ -81,6 +54,7 @@ class Character {
   final List<int> episodeIds;
   final String occupation;
   final String catchphrase;
+  final String imageUrl;
 
   Character({
     required this.id,
@@ -89,18 +63,8 @@ class Character {
     required this.episodeIds,
     required this.occupation,
     required this.catchphrase,
+    required this.imageUrl,
   });
-
-  factory Character.fromJson(Map<String, dynamic> json) {
-    return Character(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      description: json['description'] as String,
-      episodeIds: List<int>.from(json['episodeIds'] as List<dynamic>),
-      occupation: json['occupation'] as String,
-      catchphrase: json['catchphrase'] as String,
-    );
-  }
 }
 
 class Dossier {
@@ -119,62 +83,19 @@ class Dossier {
     required this.publishDate,
     required this.tags,
   });
-
-  factory Dossier.fromJson(Map<String, dynamic> json) {
-    return Dossier(
-      id: json['id'] as int,
-      title: json['title'] as String,
-      content: json['content'] as String,
-      author: json['author'] as String,
-      publishDate: DateTime.parse(json['publishDate'] as String),
-      tags: List<String>.from(json['tags'] as List<dynamic>),
-    );
-  }
 }
 
 class LocalDataService {
-  // Cette fonction chargera les actualités depuis un fichier JSON local
   Future<List<News>> getLatestNews() async {
     try {
-      // TODO: Décommenter ce code quand le fichier JSON sera créé
-      // final String jsonString = await rootBundle.loadString(AppConstants.newsJsonPath);
-      // final List<dynamic> jsonList = json.decode(jsonString);
-      // return jsonList.map((json) => News.fromJson(json)).toList();
-
-      // Données de test en attendant le fichier JSON
-      return [
-        News(
-          title: "Les Simpson renouvelés pour 4 ans !",
-          date: "3 avril 2025",
-          content: "La série est renouvelée pour 4 saisons, jusqu'au printemps 2029.",
-        ),
-        News(
-          title: "Funzo ! Funzo ! Funzo !",
-          date: "29 mars 2025",
-          content: "JAKKS Pacific a dévoilé une nouvelle gamme de jouets Simpson.",
-        ),
-        News(
-          title: "Bonne année 2025",
-          date: "2 janvier 2025",
-          content: "Bonne année 2025 de la part de SimpsonParc !",
-        ),
-      ];
+      throw UnimplementedError('Le scraping des actualités n\'est pas encore implémenté');
     } catch (e) {
       throw Exception('Erreur lors du chargement des actualités: $e');
     }
   }
 
-  // Cette fonction chargera l'anecdote du jour depuis un fichier JSON local
   Future<DailyFact> getDailyFact() async {
     try {
-      // TODO: Décommenter ce code quand le fichier JSON sera créé
-      // final String jsonString = await rootBundle.loadString(AppConstants.dailyFactsJsonPath);
-      // final List<dynamic> jsonList = json.decode(jsonString);
-      // final int dayOfYear = DateTime.now().difference(DateTime(DateTime.now().year)).inDays;
-      // final int factIndex = dayOfYear % jsonList.length;
-      // return DailyFact.fromJson(jsonList[factIndex]);
-
-      // Donnée de test en attendant le fichier JSON
       return DailyFact(
         content: "La loi russe contraint la télévision de ce pays à censurer certains dessins animés dont les Simpson. En raison de certaines scènes de violence, de sexe et d'incitation à la consommation de drogue et d'alcool dans les programmes pour la jeunesse.",
         date: DateTime.now().toString(),
@@ -184,92 +105,77 @@ class LocalDataService {
     }
   }
 
-  // Cette fonction chargera les épisodes depuis un fichier JSON local
   Future<List<Episode>> getEpisodesBySeason(int seasonNumber) async {
     try {
-      // TODO: Décommenter ce code quand le fichier JSON sera créé
-      // final String jsonString = await rootBundle.loadString(AppConstants.episodesJsonPath);
-      // final List<dynamic> jsonList = json.decode(jsonString);
-      // return jsonList
-      //     .where((json) => json['seasonNumber'] == seasonNumber)
-      //     .map((json) => Episode.fromJson(json))
-      //     .toList();
-
-      // Données de test en attendant le fichier JSON
-      return List.generate(5, (index) => Episode(
-        id: index + 1,
-        seasonNumber: seasonNumber,
-        episodeNumber: index + 1,
-        title: 'Épisode ${index + 1}',
-        description: 'Description de l\'épisode ${index + 1} de la saison $seasonNumber',
-        characters: ['Homer', 'Marge', 'Bart', 'Lisa', 'Maggie'],
-        airDate: '2025-01-${index + 1}',
-      ));
+      final String jsonString = await rootBundle.loadString('scrap/saison$seasonNumber.json');
+      final List<dynamic> jsonList = json.decode(jsonString);
+      return jsonList.map((json) {
+        final titleParts = json['titre'].toString().split(' - ');
+        final episodeNumber = int.parse(titleParts[0].substring(4, 6));
+        
+        return Episode(
+          id: episodeNumber,
+          seasonNumber: seasonNumber,
+          episodeNumber: episodeNumber,
+          title: titleParts[1],
+          description: json['description'] as String,
+          imageUrl: json['image'] as String,
+          characters: [], 
+          airDate: '', 
+        );
+      }).toList();
     } catch (e) {
       throw Exception('Erreur lors du chargement des épisodes: $e');
     }
   }
 
-  // Cette fonction chargera les personnages depuis un fichier JSON local
   Future<List<Character>> getCharacters() async {
     try {
-      // TODO: Décommenter ce code quand le fichier JSON sera créé
-      // final String jsonString = await rootBundle.loadString(AppConstants.charactersJsonPath);
-      // final List<dynamic> jsonList = json.decode(jsonString);
-      // return jsonList.map((json) => Character.fromJson(json)).toList();
-
-      // Données de test en attendant le fichier JSON
-      return [
-        Character(
-          id: 1,
-          name: 'Homer Simpson',
-          description: 'Le patriarche de la famille Simpson',
-          episodeIds: List.generate(10, (index) => index + 1),
-          occupation: 'Inspecteur de sécurité',
-          catchphrase: 'D\'oh!',
-        ),
-        Character(
-          id: 2,
-          name: 'Marge Simpson',
-          description: 'La matriarche de la famille Simpson',
-          episodeIds: List.generate(10, (index) => index + 1),
-          occupation: 'Femme au foyer',
-          catchphrase: 'Mmmmh...',
-        ),
-        // Ajoutez d'autres personnages ici
-      ];
+      final String jsonString = await rootBundle.loadString('scrap/personnage.json');
+      final List<dynamic> jsonList = json.decode(jsonString);
+      return jsonList.map((json) {
+        return Character(
+          id: jsonList.indexOf(json) + 1,
+          name: json['nom'] as String,
+          description: json['description'] as String,
+          imageUrl: json['image'] as String,
+          episodeIds: [], 
+          occupation: '', 
+          catchphrase: '', 
+        );
+      }).toList();
     } catch (e) {
       throw Exception('Erreur lors du chargement des personnages: $e');
     }
   }
 
-  // Cette fonction chargera les dossiers depuis un fichier JSON local
   Future<List<Dossier>> getDossiers() async {
     try {
-      // TODO: Décommenter ce code quand le fichier JSON sera créé
-      // final String jsonString = await rootBundle.loadString(AppConstants.dossiersJsonPath);
-      // final List<dynamic> jsonList = json.decode(jsonString);
-      // return jsonList.map((json) => Dossier.fromJson(json)).toList();
-
-      // Données de test en attendant le fichier JSON
       return [
         Dossier(
           id: 1,
-          title: 'L\'image de la France dans les Simpson',
-          content: 'Analyse détaillée de la représentation de la France...',
+          title: 'L\'image de la France dans les Simpsons',
+          content: 'Les Simpson ont souvent représenté la France et les Français dans leurs épisodes, généralement de manière stéréotypée mais affectueuse. De la gastronomie aux attitudes culturelles, en passant par les monuments emblématiques comme la Tour Eiffel, la série offre un regard américain amusant sur la culture française. Les épisodes notables incluent celui où la famille visite Paris et celui où Lisa devient étudiante d\'échange en France. Ces représentations, bien que caricaturales, ont contribué à la popularité de la série en France.',
           author: 'Admin',
           publishDate: DateTime.now(),
-          tags: ['France', 'Culture', 'Analyse'],
+          tags: ['France', 'Culture', 'Analyse', 'International'],
         ),
         Dossier(
           id: 2,
-          title: 'Les canulars téléphoniques au bar de Moe',
-          content: 'Compilation et analyse des célèbres canulars...',
+          title: 'Les canulars telephoniques au bar de Moe',
+          content: 'Une des blagues récurrentes les plus mémorables des Simpson sont les appels téléphoniques que Bart passe au bar de Moe. Ces canulars reposent sur un principe simple : Bart demande à parler à une personne dont le nom est un jeu de mots qui, une fois prononcé par Moe devant ses clients, devient une blague ou une situation embarrassante. Ces moments sont devenus cultes et illustrent parfaitement l\'humour de la série, mêlant espièglerie enfantine et références culturelles.',
           author: 'Admin',
           publishDate: DateTime.now(),
-          tags: ['Moe', 'Humour', 'Compilation'],
+          tags: ['Moe', 'Humour', 'Compilation', 'Bart', 'Gags récurrents'],
         ),
-        // Ajoutez d'autres dossiers ici
+        Dossier(
+          id: 3,
+          title: 'L\'evolution des Simpson a travers les saisons',
+          content: 'Depuis leur première apparition en 1987 dans le Tracey Ullman Show jusqu\'à aujourd\'hui, les Simpson ont considérablement évolué, tant sur le plan graphique que narratif. Les premiers épisodes étaient plus bruts dans leur animation et plus centrés sur la dynamique familiale. Au fil des saisons, la série s\'est ouverte à des sujets plus variés, des commentaires sociaux plus pointus et des références culturelles plus sophistiquées. Cette évolution reflète aussi les changements de la société américaine sur plus de trois décennies.',
+          author: 'Admin',
+          publishDate: DateTime.now(),
+          tags: ['Histoire', 'Animation', 'Évolution', 'Analyse'],
+        ),
       ];
     } catch (e) {
       throw Exception('Erreur lors du chargement des dossiers: $e');

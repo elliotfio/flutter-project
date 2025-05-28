@@ -14,7 +14,6 @@ class HomeScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          // Rafraîchir les données (à implémenter plus tard)
         },
         child: SingleChildScrollView(
           child: Padding(

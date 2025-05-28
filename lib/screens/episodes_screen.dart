@@ -70,24 +70,52 @@ class _EpisodesScreenState extends State<EpisodesScreen> {
                         horizontal: AppConstants.defaultPadding,
                         vertical: AppConstants.defaultPadding / 2,
                       ),
-                      child: ListTile(
-                        title: Text(
-                          '${episode.episodeNumber}. ${episode.title}',
-                          style: AppConstants.subtitleStyle,
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(episode.description),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Personnages: ${episode.characters.join(", ")}',
-                              style: Theme.of(context).textTheme.bodySmall,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(4),
                             ),
-                          ],
-                        ),
-                        trailing: Text(episode.airDate),
-                        isThreeLine: true,
+                            child: Image.network(
+                              episode.imageUrl,
+                              width: double.infinity,
+                              height: 200,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  width: double.infinity,
+                                  height: 200,
+                                  color: Colors.grey[300],
+                                  child: const Icon(
+                                    Icons.error_outline,
+                                    size: 48,
+                                    color: Colors.white,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(AppConstants.defaultPadding),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${episode.episodeNumber}. ${episode.title}',
+                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  episode.description,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   },

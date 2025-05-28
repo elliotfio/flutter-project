@@ -39,43 +39,55 @@ class CharactersScreen extends StatelessWidget {
                   vertical: AppConstants.defaultPadding / 2,
                 ),
                 child: ExpansionTile(
-                  leading: const CircleAvatar(
-                    child: Icon(Icons.person),
+                  leading: CircleAvatar(
+                    radius: 30,
+                    backgroundImage: NetworkImage(character.imageUrl),
+                    onBackgroundImageError: (e, s) {
+                      // En cas d'erreur de chargement de l'image
+                    },
+                    child: const Icon(Icons.person),
                   ),
                   title: Text(
                     character.name,
-                    style: AppConstants.titleStyle,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  subtitle: Text(character.occupation),
+                  subtitle: Text(
+                    character.description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(AppConstants.defaultPadding),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Description:',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          const SizedBox(height: 8),
                           Text(character.description),
-                          const SizedBox(height: 16),
-                          Text(
-                            'Phrase culte:',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            character.catchphrase,
-                            style: const TextStyle(
-                              fontStyle: FontStyle.italic,
+                          if (character.occupation.isNotEmpty) ...[
+                            const SizedBox(height: 16),
+                            Text(
+                              'Occupation:',
+                              style: Theme.of(context).textTheme.titleSmall,
                             ),
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'Apparaît dans ${character.episodeIds.length} épisodes',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
+                            const SizedBox(height: 4),
+                            Text(character.occupation),
+                          ],
+                          if (character.catchphrase.isNotEmpty) ...[
+                            const SizedBox(height: 16),
+                            Text(
+                              'Phrase culte:',
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              character.catchphrase,
+                              style: const TextStyle(
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                     ),

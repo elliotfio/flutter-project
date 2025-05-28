@@ -4,13 +4,24 @@ import 'screens/home_screen.dart';
 import 'screens/episodes_screen.dart';
 import 'screens/characters_screen.dart';
 import 'screens/dossiers_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/register_screen.dart';
 
 void main() {
   runApp(const SimpsonParcApp());
 }
 
 final _router = GoRouter(
+  initialLocation: '/login',
   routes: [
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegisterScreen(),
+    ),
     ShellRoute(
       builder: (context, state, child) {
         return Scaffold(
@@ -38,7 +49,7 @@ final _router = GoRouter(
             onDestinationSelected: (index) {
               switch (index) {
                 case 0:
-                  context.go('/');
+                  context.go('/home');
                   break;
                 case 1:
                   context.go('/episodes');
@@ -56,7 +67,7 @@ final _router = GoRouter(
       },
       routes: [
         GoRoute(
-          path: '/',
+          path: '/home',
           builder: (context, state) => HomeScreen(),
         ),
         GoRoute(
@@ -78,7 +89,7 @@ final _router = GoRouter(
 
 int _calculateSelectedIndex(GoRouterState state) {
   final String location = state.uri.toString();
-  if (location == '/') return 0;
+  if (location == '/home') return 0;
   if (location.startsWith('/episodes')) return 1;
   if (location.startsWith('/characters')) return 2;
   if (location.startsWith('/dossiers')) return 3;
@@ -91,6 +102,7 @@ class SimpsonParcApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: 'SimpsonParc',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
