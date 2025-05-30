@@ -24,7 +24,6 @@ class _EpisodesScreenState extends State<EpisodesScreen> {
       ),
       body: Column(
         children: [
-          // Sélecteur de saison
           Padding(
             padding: const EdgeInsets.all(AppConstants.defaultPadding),
             child: DropdownButton<int>(
