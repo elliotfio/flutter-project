@@ -8,6 +8,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// === Fonctions de chiffrement ===
 const SECRET = '12345678901234567890123456789012';
 const IV = Buffer.alloc(16, 0);
 
@@ -25,11 +26,12 @@ const decrypt = (encrypted) => {
   return decrypted;
 };
 
-const FILE_PATH = './users.json.enc';
+// === Gestion des utilisateurs ===
+const USERS_FILE = './users.json.enc';
 
 const getUsers = () => {
-  if (!existsSync(FILE_PATH)) return [];
-  const encryptedData = readFileSync(FILE_PATH, 'utf8');
+  if (!existsSync(USERS_FILE)) return [];
+  const encryptedData = readFileSync(USERS_FILE, 'utf8');
   const decrypted = decrypt(encryptedData);
   return JSON.parse(decrypted);
 };
@@ -37,10 +39,10 @@ const getUsers = () => {
 const saveUsers = (users) => {
   const json = JSON.stringify(users, null, 2);
   const encrypted = encrypt(json);
-  writeFileSync(FILE_PATH, encrypted, 'utf8');
+  writeFileSync(USERS_FILE, encrypted, 'utf8');
 };
 
-// === Register ===
+// === Routes d'authentification ===
 app.post('/register', (req, res) => {
   const { username, password, name } = req.body;
   if (!username || !password || !name) {
@@ -58,7 +60,6 @@ app.post('/register', (req, res) => {
   res.json({ success: true });
 });
 
-// === Login ===
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   const users = getUsers();
@@ -69,4 +70,42 @@ app.post('/login', (req, res) => {
   res.json({ success: true, name: user.name });
 });
 
-app.listen(3001, () => console.log('Serveur auth lancé sur http://localhost:3001'));
+// === Routes de gestion des administrateurs ===
+app.get('/admins', (req, res) => {
+  const users = getUsers();
+  const safeUsers = users.map(({ password, ...user }) => user);
+  res.json(safeUsers);
+});
+
+app.post('/admins', (req, res) => {
+  const { username, password, name } = req.body;
+  if (!username || !password || !name) {
+    return res.status(400).json({ error: 'Champs manquants' });
+  }
+
+  const users = getUsers();
+  if (users.find((u) => u.username === username)) {
+    return res.status(400).json({ error: 'Utilisateur déjà existant' });
+  }
+
+  users.push({ username, password, name });
+  saveUsers(users);
+
+  res.status(201).json({ success: true });
+});
+
+app.delete('/admins/:username', (req, res) => {
+  const { username } = req.params;
+  let users = getUsers();
+  const initialLength = users.length;
+  users = users.filter(u => u.username !== username);
+  
+  if (users.length === initialLength) {
+    return res.status(404).json({ error: 'Utilisateur non trouvé' });
+  }
+
+  saveUsers(users);
+  res.json({ success: true });
+});
+
+app.listen(3001, () => console.log('Serveur lancé sur http://localhost:3001'));

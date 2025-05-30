@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "title": "Le Saxo de Lisa",
+    "description": "Lisa découvre sa passion pour le saxophone et commence à prendre des leçons de musique.",
+    "season": 1,
+    "episodeNumber": 1,
+    "airDate": "1989-12-17T20:00:00Z",
+    "imageUrl": "https://example.com/lisa-saxophone.jpg"
+  }
+] 

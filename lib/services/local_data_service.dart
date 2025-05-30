@@ -150,35 +150,31 @@ class LocalDataService {
   }
 
   Future<List<Dossier>> getDossiers() async {
-    try {
-      return [
-        Dossier(
-          id: 1,
-          title: 'L\'image de la France dans les Simpsons',
-          content: 'Les Simpson ont souvent représenté la France et les Français dans leurs épisodes, généralement de manière stéréotypée mais affectueuse. De la gastronomie aux attitudes culturelles, en passant par les monuments emblématiques comme la Tour Eiffel, la série offre un regard américain amusant sur la culture française. Les épisodes notables incluent celui où la famille visite Paris et celui où Lisa devient étudiante d\'échange en France. Ces représentations, bien que caricaturales, ont contribué à la popularité de la série en France.',
-          author: 'Admin',
-          publishDate: DateTime.now(),
-          tags: ['France', 'Culture', 'Analyse', 'International'],
-        ),
-        Dossier(
-          id: 2,
-          title: 'Les canulars telephoniques au bar de Moe',
-          content: 'Une des blagues récurrentes les plus mémorables des Simpson sont les appels téléphoniques que Bart passe au bar de Moe. Ces canulars reposent sur un principe simple : Bart demande à parler à une personne dont le nom est un jeu de mots qui, une fois prononcé par Moe devant ses clients, devient une blague ou une situation embarrassante. Ces moments sont devenus cultes et illustrent parfaitement l\'humour de la série, mêlant espièglerie enfantine et références culturelles.',
-          author: 'Admin',
-          publishDate: DateTime.now(),
-          tags: ['Moe', 'Humour', 'Compilation', 'Bart', 'Gags récurrents'],
-        ),
-        Dossier(
-          id: 3,
-          title: 'L\'evolution des Simpson a travers les saisons',
-          content: 'Depuis leur première apparition en 1987 dans le Tracey Ullman Show jusqu\'à aujourd\'hui, les Simpson ont considérablement évolué, tant sur le plan graphique que narratif. Les premiers épisodes étaient plus bruts dans leur animation et plus centrés sur la dynamique familiale. Au fil des saisons, la série s\'est ouverte à des sujets plus variés, des commentaires sociaux plus pointus et des références culturelles plus sophistiquées. Cette évolution reflète aussi les changements de la société américaine sur plus de trois décennies.',
-          author: 'Admin',
-          publishDate: DateTime.now(),
-          tags: ['Histoire', 'Animation', 'Évolution', 'Analyse'],
-        ),
-      ];
-    } catch (e) {
-      throw Exception('Erreur lors du chargement des dossiers: $e');
-    }
+    return [
+      Dossier(
+        id: 1,
+        title: 'L\'image de la France dans les Simpsons',
+        content: 'Les Simpson ont souvent représenté la France et les Français dans leurs épisodes, généralement de manière stéréotypée mais affectueuse. De la gastronomie aux attitudes culturelles, en passant par les monuments emblématiques comme la Tour Eiffel, la série offre un regard américain amusant sur la culture française. Les épisodes notables incluent celui où la famille visite Paris et celui où Lisa devient étudiante d\'échange en France. Ces représentations, bien que caricaturales, ont contribué à la popularité de la série en France.',
+        author: 'Admin',
+        publishDate: DateTime.now(),
+        tags: ['France', 'Culture', 'Analyse', 'International'],
+      ),
+      Dossier(
+        id: 2,
+        title: 'Les canulars telephoniques au bar de Moe',
+        content: 'Une des blagues récurrentes les plus mémorables des Simpson sont les appels téléphoniques que Bart passe au bar de Moe. Ces canulars reposent sur un principe simple : Bart demande à parler à une personne dont le nom est un jeu de mots qui, une fois prononcé par Moe devant ses clients, devient une blague ou une situation embarrassante. Ces moments sont devenus cultes et illustrent parfaitement l\'humour de la série, mêlant espièglerie enfantine et références culturelles.',
+        author: 'Admin',
+        publishDate: DateTime.now(),
+        tags: ['Moe', 'Humour', 'Compilation', 'Bart', 'Gags récurrents'],
+      ),
+      Dossier(
+        id: 3,
+        title: 'L\'evolution des Simpson a travers les saisons',
+        content: 'Depuis leur première apparition en 1987 dans le Tracey Ullman Show jusqu\'à aujourd\'hui, les Simpson ont considérablement évolué, tant sur le plan graphique que narratif. Les premiers épisodes étaient plus bruts dans leur animation et plus centrés sur la dynamique familiale. Au fil des saisons, la série s\'est ouverte à des sujets plus variés, des commentaires sociaux plus pointus et des références culturelles plus sophistiquées. Cette évolution reflète aussi les changements de la société américaine sur plus de trois décennies.',
+        author: 'Admin',
+        publishDate: DateTime.now(),
+        tags: ['Histoire', 'Animation', 'Évolution', 'Analyse'],
+      ),
+    ];
   }
 } 

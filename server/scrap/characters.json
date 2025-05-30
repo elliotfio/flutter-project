@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "name": "Homer Simpson",
+    "description": "Père de famille maladroit et amateur de bière Duff, Homer travaille comme inspecteur de sécurité à la centrale nucléaire de Springfield.",
+    "age": 39,
+    "occupation": "Inspecteur de sécurité nucléaire",
+    "imageUrl": "https://example.com/homer.jpg"
+  }
+] 

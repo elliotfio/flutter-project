@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -32,6 +33,10 @@ class DailyFact {
 
   DailyFact({required this.content, required this.date});
 }
+=======
+import '../services/local_data_service.dart';
+import 'package:go_router/go_router.dart';
+>>>>>>> Stashed changes
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -55,6 +60,14 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('SimpsonParc'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.lock),
+            onPressed: () {
+              context.go('/login');
+            },
+          ),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

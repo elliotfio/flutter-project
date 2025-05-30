@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/local_data_service.dart';
 import '../utils/constants.dart';
-import 'edit_dossier_screen.dart';
 
 class DossiersScreen extends StatefulWidget {
   const DossiersScreen({super.key});
@@ -37,57 +36,6 @@ class _DossiersScreenState extends State<DossiersScreen> {
           SnackBar(content: Text(AppConstants.loadingError)),
         );
       }
-    }
-  }
-
-  Future<void> _editDossier(BuildContext context, [Dossier? dossier]) async {
-    final result = await Navigator.push<Dossier>(
-      context,
-      MaterialPageRoute(
-        builder: (context) => EditDossierScreen(dossier: dossier),
-      ),
-    );
-
-    if (result != null) {
-      setState(() {
-        if (dossier != null) {
-          final index = _dossiers.indexWhere((d) => d.id == dossier.id);
-          if (index != -1) {
-            _dossiers[index] = result;
-          }
-        } else {
-          _dossiers.add(result);
-        }
-      });
-    }
-  }
-
-  Future<void> _deleteDossier(Dossier dossier) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text(
-          'Confirmer la suppression',
-          style: TextStyle(fontFamily: 'Simpsons'),
-        ),
-        content: Text('Voulez-vous vraiment supprimer le dossier "${dossier.title}" ?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Annuler'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Supprimer'),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed == true) {
-      setState(() {
-        _dossiers.removeWhere((d) => d.id == dossier.id);
-      });
     }
   }
 
@@ -131,19 +79,6 @@ class _DossiersScreenState extends State<DossiersScreen> {
                             ),
                           ],
                         ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () => _editDossier(context, dossier),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () => _deleteDossier(dossier),
-                            ),
-                          ],
-                        ),
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(AppConstants.defaultPadding),
@@ -169,10 +104,6 @@ class _DossiersScreenState extends State<DossiersScreen> {
                     );
                   },
                 ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _editDossier(context),
-        child: const Icon(Icons.add),
-      ),
     );
   }
 } 

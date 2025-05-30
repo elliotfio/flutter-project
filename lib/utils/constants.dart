@@ -27,7 +27,7 @@ class AppConstants {
   static const String dailyFactTitle = 'L\'anecdote du jour';
   static const String episodesTitle = 'Épisodes des Simpsons';
   static const String charactersTitle = 'Personnages';
-  static const String dossiersTitle = 'Dossiers Thématiques';
+  static const String dossiersTitle = 'Dossiers Thematiques';
 
   // Messages d'erreur
   static const String loadingError = 'Erreur de chargement';

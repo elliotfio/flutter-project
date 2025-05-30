@@ -44,7 +44,6 @@ class CharactersScreen extends StatelessWidget {
                     backgroundImage: NetworkImage(character.imageUrl),
                     onBackgroundImageError: (e, s) {
                     },
-                    child: const Icon(Icons.person),
                   ),
                   title: Text(
                     character.name,

@@ -6,21 +6,48 @@ import 'screens/characters_screen.dart';
 import 'screens/dossiers_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
+import 'screens/admin/dashboard_screen.dart';
+import 'screens/admin/manage_admins_screen.dart';
+import 'screens/admin/manage_dossiers_screen.dart';
+import 'services/auth_service.dart';
 
 void main() {
   runApp(const SimpsonParcApp());
 }
 
+final _authService = AuthService();
+
+// Middleware pour vérifier l'authentification
+Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
+  final isAuthenticated = await _authService.isAuthenticated();
+  if (!isAuthenticated) {
+    return '/login';
+  }
+  return null;
+}
+
 final _router = GoRouter(
-  initialLocation: '/login',
+  initialLocation: '/home',
   routes: [
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginScreen(),
     ),
+    // Routes protégées pour l'administration
     GoRoute(
-      path: '/register',
-      builder: (context, state) => const RegisterScreen(),
+      path: '/admin/dashboard',
+      builder: (context, state) => AdminDashboardScreen(),
+      redirect: _authGuard,
+    ),
+    GoRoute(
+      path: '/admin/admins',
+      builder: (context, state) => const ManageAdminsScreen(),
+      redirect: _authGuard,
+    ),
+    GoRoute(
+      path: '/admin/dossiers',
+      builder: (context, state) => const ManageDossiersScreen(),
+      redirect: _authGuard,
     ),
     ShellRoute(
       builder: (context, state, child) {

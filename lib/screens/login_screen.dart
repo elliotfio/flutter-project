@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import '../utils/constants.dart';
+import '../services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _authService = AuthService();
   bool _isPasswordVisible = false;
 
   @override
@@ -38,17 +40,26 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (response.statusCode == 200) {
-        context.go('/home');
+        await _authService.login();
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Connecté en tant qu\'administrateur')),
+          );
+          context.go('/admin/dashboard');
+        }
       } else {
-        final error = jsonDecode(response.body)['error'];
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error ?? 'Erreur de connexion')),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Email ou mot de passe incorrect')),
+          );
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erreur réseau : $e')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Erreur de connexion au serveur')),
+        );
+      }
     }
   }
 
@@ -72,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   // Titre
                   const Text(
-                    'SimpsonsParc',
+                    'Administration',
                     style: TextStyle(
                       fontFamily: 'Simpsons',
                       fontSize: 48,
@@ -102,15 +113,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
-                                labelText: 'Email',
-                                prefixIcon: const Icon(Icons.email),
+                                labelText: 'Email administrateur',
+                                prefixIcon: const Icon(Icons.admin_panel_settings),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Veuillez entrer votre email';
+                                  return 'Veuillez entrer votre email administrateur';
                                 }
                                 if (!value.contains('@')) {
                                   return 'Veuillez entrer un email valide';
@@ -169,19 +180,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   }
                                 },
                                 child: const Text(
-                                  'Se connecter',
+                                  'Connexion Admin',
                                   style: TextStyle(fontSize: 18),
                                 ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            TextButton(
-                              onPressed: () {
-                                context.push('/register');
-                              },
-                              child: const Text(
-                                'Pas encore de compte ? S\'inscrire',
-                                style: TextStyle(color: Colors.blue),
                               ),
                             ),
                           ],
