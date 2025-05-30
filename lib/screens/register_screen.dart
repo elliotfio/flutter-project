@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 import '../utils/constants.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -25,6 +27,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _register() async {
+    final url = Uri.parse('http://localhost:3001/register');
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'username': _emailController.text.trim(),
+          'password': _passwordController.text,
+          'name': _nameController.text.trim(),
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Compte créé avec succès !')),
+        );
+        context.go('/home');
+      } else {
+        final error = jsonDecode(response.body)['error'];
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error ?? 'Erreur lors de l\'inscription')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erreur réseau : $e')),
+      );
+    }
   }
 
   @override
@@ -179,9 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    print('Name: ${_nameController.text}');
-                                    print('Email: ${_emailController.text}');
-                                    print('Password: ${_passwordController.text}');
+                                    _register();
                                   }
                                 },
                                 child: const Text(
@@ -213,4 +244,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-} 
+}

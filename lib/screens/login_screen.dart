@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 import '../utils/constants.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,6 +24,34 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  Future<void> _login() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    final url = Uri.parse('http://localhost:3001/login');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'username': email, 'password': password}),
+      );
+
+      if (response.statusCode == 200) {
+        context.go('/home');
+      } else {
+        final error = jsonDecode(response.body)['error'];
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error ?? 'Erreur de connexion')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erreur réseau : $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +70,6 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Logo ou Titre
                   const Text(
                     'SimpsonsParc',
                     style: TextStyle(
@@ -57,7 +86,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 50),
-                  // Formulaire
                   Card(
                     elevation: 8,
                     shape: RoundedRectangleBorder(
@@ -136,9 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    print('Email: ${_emailController.text}');
-                                    print('Password: ${_passwordController.text}');
-                                    context.go('/home');
+                                    _login();
                                   }
                                 },
                                 child: const Text(
@@ -170,4 +196,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-} 
+}
