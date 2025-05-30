@@ -106,7 +106,9 @@ class HomeScreen extends StatelessWidget {
               itemCount: news.length,
               itemBuilder: (context, index) {
                 final newsItem = news[index];
-                return GestureDetector(
+                return MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
                   onTap: () async {
                     if (newsItem.imageUrl != null &&
                         await canLaunchUrl(Uri.parse(newsItem.imageUrl!))) {
@@ -146,6 +148,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                ),
                 );
               },
             );
