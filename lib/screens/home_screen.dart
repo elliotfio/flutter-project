@@ -1,10 +1,54 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import '../services/local_data_service.dart';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class News {
+  final String title;
+  final String date;
+  final String content;
+  final String? imageUrl;
+
+  News({
+    required this.title,
+    required this.date,
+    required this.content,
+    this.imageUrl,
+  });
+
+  factory News.fromJson(Map<String, dynamic> json) {
+    return News(
+      title: json['titre'],
+      date: json['date'],
+      content: json['resume'],
+      imageUrl: json['url'],
+    );
+  }
+}
+
+class DailyFact {
+  final String content;
+  final String date;
+
+  DailyFact({required this.content, required this.date});
+}
 
 class HomeScreen extends StatelessWidget {
-  final LocalDataService dataService = LocalDataService();
+  const HomeScreen({super.key});
 
-  HomeScreen({super.key});
+  Future<List<News>> _loadNews() async {
+    final jsonString = await rootBundle.loadString('scrap/actu.json');
+    final Map<String, dynamic> jsonMap = json.decode(jsonString);
+    final List<dynamic> actuList = jsonMap['actualites'];
+    return actuList.map((item) => News.fromJson(item)).toList();
+  }
+
+  Future<DailyFact> _loadDailyFact() async {
+    return DailyFact(
+      content: "Saviez-vous que Homer a une adresse email : chunkylover53@aol.com ?",
+      date: "2025-05-30",
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +58,10 @@ class HomeScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
+          // Tu peux mettre une logique de refresh ici si besoin
         },
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -45,7 +91,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         FutureBuilder<List<News>>(
-          future: dataService.getLatestNews(),
+          future: _loadNews(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -60,46 +106,44 @@ class HomeScreen extends StatelessWidget {
               itemCount: news.length,
               itemBuilder: (context, index) {
                 final newsItem = news[index];
-                return Card(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (newsItem.imageUrl != null)
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              newsItem.imageUrl!,
-                              width: double.infinity,
-                              height: 200,
-                              fit: BoxFit.cover,
+                return GestureDetector(
+                  onTap: () async {
+                    if (newsItem.imageUrl != null &&
+                        await canLaunchUrl(Uri.parse(newsItem.imageUrl!))) {
+                      launchUrl(Uri.parse(newsItem.imageUrl!));
+                    }
+                  },
+                  child: Card(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (newsItem.imageUrl != null)
+                            const SizedBox(height: 16),
+                          Text(
+                            newsItem.title,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        if (newsItem.imageUrl != null)
-                          const SizedBox(height: 16),
-                        Text(
-                          newsItem.title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                          const SizedBox(height: 8),
+                          Text(
+                            newsItem.date,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 14,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          newsItem.date,
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 14,
+                          const SizedBox(height: 8),
+                          Text(
+                            newsItem.content,
+                            style: const TextStyle(fontSize: 16),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          newsItem.content,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -124,7 +168,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         FutureBuilder<DailyFact>(
-          future: dataService.getDailyFact(),
+          future: _loadDailyFact(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -166,4 +210,4 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
-} 
+}
