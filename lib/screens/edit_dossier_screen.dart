@@ -132,7 +132,7 @@ class _EditDossierScreenState extends State<EditDossierScreen> {
                     id: widget.dossier?.id ?? DateTime.now().millisecondsSinceEpoch,
                     title: _titleController.text,
                     content: _contentController.text,
-                    author: 'Admin', // À remplacer par l'utilisateur connecté
+                    author: 'Admin',
                     publishDate: DateTime.now(),
                     tags: _tags,
                   );
