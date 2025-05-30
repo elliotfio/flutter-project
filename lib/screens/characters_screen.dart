@@ -43,7 +43,6 @@ class CharactersScreen extends StatelessWidget {
                     radius: 30,
                     backgroundImage: NetworkImage(character.imageUrl),
                     onBackgroundImageError: (e, s) {
-                      // En cas d'erreur de chargement de l'image
                     },
                     child: const Icon(Icons.person),
                   ),
