@@ -70,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Titre
                   const Text(
                     'SimpsonsParc',
                     style: TextStyle(
