@@ -1,104 +1,75 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+class Character {
+  final String nom;
+  final String image;
+  final String description;
+
+  Character({
+    required this.nom,
+    required this.image,
+    required this.description,
+  });
+
+  factory Character.fromJson(Map<String, dynamic> json) {
+    return Character(
+      nom: json['nom'],
+      image: json['image'],
+      description: json['description'],
+    );
+  }
+}
 
 class ManageCharactersScreen extends StatelessWidget {
   const ManageCharactersScreen({super.key});
 
+  Future<List<Character>> loadCharacters() async {
+    final jsonString = await rootBundle.loadString('scrap/personnage.json');
+    final List<dynamic> jsonList = json.decode(jsonString);
+    return jsonList.map((json) => Character.fromJson(json)).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gerer les personnages'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Ajouter un personnage',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Nom',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Description',
-                        border: OutlineInputBorder(),
-                      ),
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Occupation',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Phrase culte',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'URL de l\'image',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Relations (séparées par des virgules)',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Ajouter'),
-                    ),
-                  ],
+      appBar: AppBar(title: const Text("Gérer les personnages")),
+      body: FutureBuilder<List<Character>>(
+        future: loadCharacters(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError || !snapshot.hasData) {
+            return const Center(child: Text("Erreur lors du chargement"));
+          }
+
+          final characters = snapshot.data!;
+          return ListView.builder(
+            itemCount: characters.length,
+            itemBuilder: (context, index) {
+              final character = characters[index];
+              return Card(
+                margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                child: ListTile(
+                  leading: Image.network(
+                    character.image,
+                    width: 80,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.broken_image, size: 48),
+                  ),
+                  title: Text(character.nom),
+                  subtitle: Text(
+                    character.description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 32),
-            const Text(
-              'Liste des personnages',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: Center(
-                child: Text(
-                  'Aucun personnage disponible',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-            ),
-          ],
-        ),
+              );
+            },
+          );
+        },
       ),
     );
   }
-} 
+}
