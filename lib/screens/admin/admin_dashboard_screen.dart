@@ -103,7 +103,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         padding: EdgeInsets.all(16.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: [
+                           children: [
                             Icon(
                               Icons.admin_panel_settings,
                               size: 48,
