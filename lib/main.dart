@@ -12,6 +12,7 @@ import 'screens/admin/manage_episodes_screen.dart';
 import 'screens/admin/manage_seasons_screen.dart';
 import 'screens/admin/manage_news_screen.dart';
 import 'screens/admin/manage_dossiers_screen.dart';
+import 'screens/admin/manage_characters_screen.dart';
 import 'services/auth_service.dart';
 
 void main() {
@@ -55,6 +56,11 @@ final _router = GoRouter(
     GoRoute(
       path: '/admin/seasons',
       builder: (context, state) => const ManageSeasonsScreen(),
+      redirect: _authGuard,
+    ),
+    GoRoute(
+      path: '/admin/characters',
+      builder: (context, state) => const ManageCharactersScreen(),
       redirect: _authGuard,
     ),
     GoRoute(

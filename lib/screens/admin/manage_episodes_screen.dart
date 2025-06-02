@@ -51,7 +51,7 @@ class _ManageEpisodesScreenState extends State<ManageEpisodesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Épisodes des Simpsons')),
+      appBar: AppBar(title: const Text('Episodes des Simpsons')),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

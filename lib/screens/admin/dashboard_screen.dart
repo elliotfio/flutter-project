@@ -66,6 +66,13 @@ class AdminDashboardScreen extends StatelessWidget {
                   ),
                   _buildAdminCard(
                     context,
+                    'Gerer les personnages',
+                    Icons.person,
+                    Colors.amber,
+                    () => context.push('/admin/characters'),
+                  ),
+                  _buildAdminCard(
+                    context,
                     'Gérer les dossiers',
                     Icons.folder,
                     Colors.orange,
