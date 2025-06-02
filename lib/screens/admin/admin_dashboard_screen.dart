@@ -111,7 +111,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             ),
                             SizedBox(height: 16),
                             Text(
-                              'Gérer les administrateurs',
+                              'Gerer les administrateurs',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ManageDossiersScreen extends StatelessWidget {
-  const ManageDossiersScreen({super.key});
+class ManageNewsScreen extends StatelessWidget {
+  const ManageNewsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gerer les dossiers'),
+        title: const Text('Gerer les actualites'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -21,7 +21,7 @@ class ManageDossiersScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Ajouter un dossier',
+                      'Ajouter une actualité',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -39,21 +39,27 @@ class ManageDossiersScreen extends StatelessWidget {
                       decoration: const InputDecoration(
                         labelText: 'Contenu',
                         border: OutlineInputBorder(),
-                        alignLabelWithHint: true,
                       ),
                       maxLines: 5,
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
                       decoration: const InputDecoration(
-                        labelText: 'Tags (séparés par des virgules)',
+                        labelText: 'URL de l\'image',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Source',
                         border: OutlineInputBorder(),
                       ),
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {},
-                      child: const Text('Ajouter'),
+                      child: const Text('Publier'),
                     ),
                   ],
                 ),
@@ -61,7 +67,7 @@ class ManageDossiersScreen extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             const Text(
-              'Liste des dossiers',
+              'Actualités publiées',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -71,7 +77,7 @@ class ManageDossiersScreen extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Text(
-                  'Aucun dossier disponible',
+                  'Aucune actualité disponible',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),

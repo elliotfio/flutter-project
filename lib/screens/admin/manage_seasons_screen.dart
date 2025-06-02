@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ManageDossiersScreen extends StatelessWidget {
-  const ManageDossiersScreen({super.key});
+class ManageSeasonsScreen extends StatelessWidget {
+  const ManageSeasonsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gerer les dossiers'),
+        title: const Text('Gerer les saisons'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -21,7 +21,7 @@ class ManageDossiersScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Ajouter un dossier',
+                      'Ajouter une saison',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -30,23 +30,30 @@ class ManageDossiersScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     TextFormField(
                       decoration: const InputDecoration(
-                        labelText: 'Titre',
+                        labelText: 'Numéro de saison',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Titre de la saison',
                         border: OutlineInputBorder(),
                       ),
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
                       decoration: const InputDecoration(
-                        labelText: 'Contenu',
+                        labelText: 'Description',
                         border: OutlineInputBorder(),
-                        alignLabelWithHint: true,
                       ),
-                      maxLines: 5,
+                      maxLines: 3,
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
                       decoration: const InputDecoration(
-                        labelText: 'Tags (séparés par des virgules)',
+                        labelText: 'Date de diffusion',
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -61,7 +68,7 @@ class ManageDossiersScreen extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             const Text(
-              'Liste des dossiers',
+              'Liste des saisons',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -71,7 +78,7 @@ class ManageDossiersScreen extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Text(
-                  'Aucun dossier disponible',
+                  'Aucune saison disponible',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),

@@ -121,7 +121,7 @@ class _ManageAdminsScreenState extends State<ManageAdminsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer les administrateurs'),
+        title: const Text('Gerer les admins'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

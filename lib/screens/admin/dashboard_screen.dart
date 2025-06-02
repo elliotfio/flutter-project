@@ -11,7 +11,7 @@ class AdminDashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tableau de bord Admin'),
+        title: const Text('Tableau de bord'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -37,27 +37,49 @@ class AdminDashboardScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            Wrap(
-              spacing: 16,
-              runSpacing: 16,
-              children: [
-                _buildAdminCard(
-                  context,
-                  'Gérer les administrateurs',
-                  Icons.admin_panel_settings,
-                  () {
-                    context.push('/admin/admins');
-                  },
-                ),
-                // _buildAdminCard(
-                //   context,
-                //   'Gérer les dossiers',
-                //   Icons.folder,
-                //   () {
-                //     context.push('/admin/dossiers');
-                //   },
-                // ),
-              ],
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                mainAxisSpacing: 16,
+                crossAxisSpacing: 16,
+                children: [
+                  _buildAdminCard(
+                    context,
+                    'Gérer les administrateurs',
+                    Icons.admin_panel_settings,
+                    Colors.purple,
+                    () => context.push('/admin/admins'),
+                  ),
+                  _buildAdminCard(
+                    context,
+                    'Gérer les épisodes',
+                    Icons.tv,
+                    Colors.blue,
+                    () => context.push('/admin/episodes'),
+                  ),
+                  _buildAdminCard(
+                    context,
+                    'Gérer les saisons',
+                    Icons.playlist_play,
+                    Colors.green,
+                    () => context.push('/admin/seasons'),
+                  ),
+                  _buildAdminCard(
+                    context,
+                    'Gérer les dossiers',
+                    Icons.folder,
+                    Colors.orange,
+                    () => context.push('/admin/dossiers'),
+                  ),
+                  _buildAdminCard(
+                    context,
+                    'Gérer les actualités',
+                    Icons.newspaper,
+                    Colors.red,
+                    () => context.push('/admin/news'),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -69,6 +91,7 @@ class AdminDashboardScreen extends StatelessWidget {
     BuildContext context,
     String title,
     IconData icon,
+    Color color,
     VoidCallback onTap,
   ) {
     return Card(
@@ -79,13 +102,12 @@ class AdminDashboardScreen extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
-        child: Container(
-          width: 200,
+        child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 48, color: Theme.of(context).primaryColor),
+              Icon(icon, size: 48, color: color),
               const SizedBox(height: 12),
               Text(
                 title,

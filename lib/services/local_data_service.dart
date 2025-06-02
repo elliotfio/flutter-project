@@ -151,7 +151,7 @@ class LocalDataService {
 
   Future<List<Dossier>> getDossiers() async {
     return [
-      Dossier(
+      Dossier(  
         id: 1,
         title: 'L\'image de la France dans les Simpsons',
         content: 'Les Simpson ont souvent représenté la France et les Français dans leurs épisodes, généralement de manière stéréotypée mais affectueuse. De la gastronomie aux attitudes culturelles, en passant par les monuments emblématiques comme la Tour Eiffel, la série offre un regard américain amusant sur la culture française. Les épisodes notables incluent celui où la famille visite Paris et celui où Lisa devient étudiante d\'échange en France. Ces représentations, bien que caricaturales, ont contribué à la popularité de la série en France.',

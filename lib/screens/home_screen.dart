@@ -132,8 +132,6 @@ class HomeScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (newsItem.imageUrl != null)
-                            const SizedBox(height: 16),
                           Text(
                             newsItem.title,
                             style: const TextStyle(
